@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--
+      sp-calc — semantic + accessible UI
+
+      I’m using:
+      - <main> landmark for semantic structure
+      - aria-live="polite" for expression/result announcements
+      - role="alert" for errors (immediate announcement)
+      - real <button> elements (free accessibility)
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>sp-calc ✅</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <!-- Skip link for keyboard users -->
+    <a class="skip-link" href="#appTitle">Skip to calculator</a>
+
+    <main class="page">
+      <section class="card" aria-labelledby="appTitle">
+        <header class="header">
+          <h1 id="appTitle">sp-calc ✅</h1>
+          <p class="sub">Four‑function calculator — semantic, accessible, responsive, crash‑proof.</p>
+        </header>
+
+        <!-- Display: expression + result + errors -->
+        <div class="display" role="group" aria-label="Calculator display">
+          <div id="expression" class="expr" aria-label="Expression" aria-live="polite"></div>
+
+          <div id="result" class="result" aria-label="Result" aria-live="polite">0</div>
+
+          <div class="error-bar" aria-label="Error region">
+            <!-- role="alert" is the requirement for error announcements -->
+            <div id="errorMessage" class="error" role="alert" aria-atomic="true"></div>
+
+            <!-- Dismiss button clears only the message (not the user’s input) -->
+            <button id="dismissError" class="dismiss" type="button" aria-label="Dismiss error" hidden>
+              ×
+            </button>
+          </div>
+
+          <p id="srHints" class="sr-only">
+            Keyboard: digits, dot, plus, minus, asterisk, slash, Enter evaluates, Backspace deletes, C clears.
+          </p>
+        </div>
+
+        <!-- Keypad -->
+        <div class="pad" role="group" aria-label="Calculator buttons">
+          <button class="btn btn--util" data-key="C" type="button" aria-label="Clear">C</button>
+          <button class="btn btn--util" data-key="⌫" type="button" aria-label="Backspace">⌫</button>
+          <button class="btn btn--util" data-key="±" type="button" aria-label="Toggle sign">±</button>
+          <button class="btn btn--op" data-key="/" type="button" aria-label="Divide">÷</button>
+
+          <button class="btn" data-key="7" type="button">7</button>
+          <button class="btn" data-key="8" type="button">8</button>
+          <button class="btn" data-key="9" type="button">9</button>
+          <button class="btn btn--op" data-key="*" type="button" aria-label="Multiply">×</button>
+
+          <button class="btn" data-key="4" type="button">4</button>
+          <button class="btn" data-key="5" type="button">5</button>
+          <button class="btn" data-key="6" type="button">6</button>
+          <button class="btn btn--op" data-key="-" type="button" aria-label="Subtract">−</button>
+
+          <button class="btn" data-key="1" type="button">1</button>
+          <button class="btn" data-key="2" type="button">2</button>
+          <button class="btn" data-key="3" type="button">3</button>
+          <button class="btn btn--op" data-key="+" type="button" aria-label="Add">+</button>
+
+          <button class="btn btn--wide" data-key="0" type="button">0</button>
+          <button class="btn" data-key="." type="button">.</button>
+          <button class="btn btn--eq" data-key="=" type="button" aria-label="Equals">=</button>
+        </div>
+
+        <footer class="footer">
+          <div class="hint" aria-describedby="srHints">
+            Keyboard: <kbd>0–9</kbd>, <kbd>.</kbd>, <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>,
+            <kbd>Enter</kbd>=equals, <kbd>Backspace</kbd>=delete, <kbd>C</kbd>=clear.
+          </div>
+        </footer>
+
+        <noscript>
+          <p class="noscript">This calculator needs JavaScript enabled.</p>
+        </noscript>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
