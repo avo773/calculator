@@ -1,58 +1,116 @@
 <!doctype html>
+<!-- <!doctype html> tells the browser to use modern HTML parsing rules. -->
 <html lang="en">
+  <!-- lang="en" tells the browser and assistive technology that the page language is English. -->
   <head>
     <!--
-      sp-calc — semantic + accessible UI
+      This file defines the calculator UI structure.
 
-      I’m using:
-      - <main> landmark for semantic structure
-      - aria-live="polite" for expression/result announcements
-      - role="alert" for errors (immediate announcement)
-      - real <button> elements (free accessibility)
+      Main accessibility/syntax choices:
+      - <main> provides a landmark for the main content
+      - aria-live="polite" announces dynamic expression/result updates
+      - role="alert" announces errors immediately
+      - real <button> elements provide built-in keyboard and accessibility behavior
+      - data-key attributes connect HTML buttons to shared JavaScript input handling
     -->
+
     <meta charset="UTF-8" />
+    <!-- charset="UTF-8" allows the page to safely display a wide range of characters like × and ÷. -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>sp-calc ✅</title>
+    <!-- viewport metadata tells mobile browsers how to scale the page.
+         width=device-width matches the screen width.
+         initial-scale=1 prevents unexpected zooming on load. -->
+
+    <title>sp-calc</title>
+    <!-- <title> sets the browser tab title and improves page identification. -->
+
     <link rel="stylesheet" href="./styles.css" />
+    <!-- <link> loads the external CSS file.
+         rel="stylesheet" tells the browser this file contains styles.
+         href="./styles.css" points to the CSS file in the same folder. -->
   </head>
 
   <body>
-    <!-- Skip link for keyboard users -->
+    <!-- Skip link gives keyboard users a fast path to the main interactive content. -->
     <a class="skip-link" href="#appTitle">Skip to calculator</a>
+    <!-- href="#appTitle" jumps to the element whose id is appTitle. -->
 
     <main class="page">
+      <!-- <main> is a semantic landmark for the primary page content.
+           class="page" hooks this element into CSS styling. -->
+
       <section class="card" aria-labelledby="appTitle">
+        <!-- <section> groups the calculator into one meaningful block.
+             aria-labelledby="appTitle" tells assistive technology to use the h1 as this section’s label. -->
+
         <header class="header">
-          <h1 id="appTitle">sp-calc ✅</h1>
-          <p class="sub">Four‑function calculator — semantic, accessible, responsive, crash‑proof.</p>
+          <!-- <header> groups introductory content for this card/section. -->
+
+          <h1 id="appTitle">sp-calc</h1>
+          <!-- id="appTitle" gives this heading a unique identifier for linking and labeling. -->
+
+          <p class="sub">
+            Four-function calculator — semantic, accessible, responsive, and designed for safe error handling.
+          </p>
+          <!-- <p> is plain text content.
+               class="sub" gives this paragraph a secondary visual style in CSS. -->
         </header>
 
-        <!-- Display: expression + result + errors -->
         <div class="display" role="group" aria-label="Calculator display">
+          <!-- This wrapper groups the visible output area.
+               role="group" tells assistive technology these related elements belong together.
+               aria-label provides a readable label for the grouped content. -->
+
           <div id="expression" class="expr" aria-label="Expression" aria-live="polite"></div>
+          <!-- id="expression" lets JavaScript target this element directly.
+               class="expr" connects it to CSS styling.
+               aria-label names the field for assistive tech.
+               aria-live="polite" allows dynamic expression updates to be announced non-aggressively. -->
 
           <div id="result" class="result" aria-label="Result" aria-live="polite">0</div>
+          <!-- This stores the current displayed result.
+               The initial text is 0 so the UI does not load as blank.
+               aria-live="polite" makes result changes accessible when updated by JavaScript. -->
 
           <div class="error-bar" aria-label="Error region">
-            <!-- role="alert" is the requirement for error announcements -->
-            <div id="errorMessage" class="error" role="alert" aria-atomic="true"></div>
+            <!-- This wrapper groups error text and the dismiss button into one visible feedback area. -->
 
-            <!-- Dismiss button clears only the message (not the user’s input) -->
+            <div id="errorMessage" class="error" role="alert" aria-atomic="true"></div>
+            <!-- id="errorMessage" lets JavaScript inject error text here.
+                 class="error" styles the error visually.
+                 role="alert" makes important errors announce immediately.
+                 aria-atomic="true" tells assistive tech to read the whole updated message. -->
+
             <button id="dismissError" class="dismiss" type="button" aria-label="Dismiss error" hidden>
               ×
             </button>
+            <!-- <button> is used instead of a clickable div because it is semantically correct and accessible.
+                 id="dismissError" lets JavaScript show/hide and attach behavior to this button.
+                 type="button" prevents accidental form-submit behavior.
+                 hidden starts the button invisible until an error exists. -->
           </div>
 
           <p id="srHints" class="sr-only">
             Keyboard: digits, dot, plus, minus, asterisk, slash, Enter evaluates, Backspace deletes, C clears.
           </p>
+          <!-- This paragraph is visually hidden but still available to assistive technology.
+               id="srHints" allows other elements to reference this helper text. -->
         </div>
 
-        <!-- Keypad -->
         <div class="pad" role="group" aria-label="Calculator buttons">
+          <!-- This is the keypad container.
+               class="pad" connects it to the CSS grid and to JavaScript event delegation.
+               role="group" and aria-label help identify the control cluster. -->
+
           <button class="btn btn--util" data-key="C" type="button" aria-label="Clear">C</button>
+          <!-- data-key stores the logical calculator input value directly in HTML.
+               JavaScript reads dataset.key from this attribute so button clicks and keyboard input can share one handler. -->
+
           <button class="btn btn--util" data-key="⌫" type="button" aria-label="Backspace">⌫</button>
+
           <button class="btn btn--util" data-key="±" type="button" aria-label="Toggle sign">±</button>
+
           <button class="btn btn--op" data-key="/" type="button" aria-label="Divide">÷</button>
 
           <button class="btn" data-key="7" type="button">7</button>
@@ -71,23 +129,33 @@
           <button class="btn btn--op" data-key="+" type="button" aria-label="Add">+</button>
 
           <button class="btn btn--wide" data-key="0" type="button">0</button>
+          <!-- btn--wide allows the zero button to span more than one grid column in CSS. -->
+
           <button class="btn" data-key="." type="button">.</button>
+
           <button class="btn btn--eq" data-key="=" type="button" aria-label="Equals">=</button>
         </div>
 
         <footer class="footer">
+          <!-- <footer> groups the small supporting notes below the keypad. -->
+
           <div class="hint" aria-describedby="srHints">
             Keyboard: <kbd>0–9</kbd>, <kbd>.</kbd>, <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>,
             <kbd>Enter</kbd>=equals, <kbd>Backspace</kbd>=delete, <kbd>C</kbd>=clear.
           </div>
+          <!-- <kbd> is a semantic HTML element for keyboard input labels.
+               aria-describedby="srHints" points to the hidden helper text for more context. -->
         </footer>
 
         <noscript>
           <p class="noscript">This calculator needs JavaScript enabled.</p>
         </noscript>
+        <!-- <noscript> content appears only if JavaScript is disabled.
+             This gives a clear fallback message instead of a confusing broken UI. -->
       </section>
     </main>
 
     <script src="./app.js"></script>
+    <!-- <script> loads the JavaScript after the HTML so the DOM exists before the script tries to query elements. -->
   </body>
 </html>
