@@ -1,34 +1,79 @@
-# sp-calc ✅
+# Calculator
 
-A four‑function calculator designed to meet the baseline acceptance criteria and pass a rubric review.
+A basic four-function calculator built with semantic HTML, responsive CSS, and modular JavaScript.
 
-## How to run
-Open `calculator/index.html` in your browser (Chrome/Edge/Firefox).
+This project was created to practice front-end structure, state handling, pure calculation logic, accessibility, and error handling.
 
-## Features (mapped to the rubric)
-- **Semantic HTML + accessible UI**
-  - visible focus via `:focus-visible`
-  - `aria-live="polite"` on expression and result
-  - `role="alert"` error region with dismiss button
-- **Clean responsive CSS**
-  - centered container, max width ~420px
-  - 4-column grid keypad with consistent spacing
-  - touch-friendly sizing (~44px targets)
-- **Modular JS**
-  - pure `calculate(a, op, b)`
-  - validation with `Number.isFinite`
-  - divide-by-zero handled
-  - app never crashes on bad input
-- **Optional keyboard support**
-  - digits, `.`, `+ - * /`, `Enter`, `Backspace`, `C`
+## Features
+- Addition
+- Subtraction
+- Multiplication
+- Division
+- Clear button
+- Friendly error handling
+- Accessible result updates with `aria-live="polite"`
+- Accessible error messages with `role="alert"`
+- Responsive button grid layout
+- Keyboard support for digits, operators, Enter, Backspace, and C
 
-## Known limitations
-- Floating point math can show classic JS precision quirks (example: `0.1 + 0.2`).
-- Output is formatted to reduce noise, but IEEE‑754 still exists.
+## Files
+- `index.html`
+- `styles.css`
+- `app.js`
+- `README.md`
+- `TESTS.md`
 
-## Self-audit proof terms
-- `role="alert"` → `calculator/index.html`
-- `aria-live="polite"` → `calculator/index.html`
-- `:focus-visible` → `calculator/styles.css`
-- `function calculate(` → `calculator/app.js`
-- `Number.isFinite` → `calculator/app.js`
+## How to Run
+1. Open the project folder.
+2. Open `index.html` in a browser.
+
+## Accessibility Notes
+- Result uses `aria-live="polite"`
+- Error area uses `role="alert"`
+- Buttons include visible focus styles
+- Includes a skip link for keyboard users
+- Includes reduced-motion support
+
+## Known Limitations
+- Supports one operation at a time
+- Does not support long chained expressions
+# Calculator
+
+A basic four-function calculator built with semantic HTML, responsive CSS, and modular JavaScript.
+
+This project was created to practice front-end structure, state handling, pure calculation logic, accessibility, and error handling.
+
+## Features
+- Addition
+- Subtraction
+- Multiplication
+- Division
+- Clear button
+- Friendly error handling
+- Accessible result updates with `aria-live="polite"`
+- Accessible error messages with `role="alert"`
+- Responsive button grid layout
+- Keyboard support for digits, operators, Enter, Backspace, and C
+
+## Files
+- `index.html`
+- `styles.css`
+- `app.js`
+- `README.md`
+- `TESTS.md`
+
+## How to Run
+1. Open the project folder.
+2. Open `index.html` in a browser.
+
+## Accessibility Notes
+- Result uses `aria-live="polite"`
+- Error area uses `role="alert"`
+- Buttons include visible focus styles
+- Includes a skip link for keyboard users
+- Includes reduced-motion support
+
+## Known Limitations
+- Supports one operation at a time
+- Does not support long chained expressions Does not include keyboard support in this version
+- Does not support long chained expressions
